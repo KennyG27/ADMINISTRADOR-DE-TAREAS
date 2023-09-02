@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gestor de Tareas</title>
+  <style>
+    /* Estilos CSS aquí */
+    body {
+  font-family: "Georgia", serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7f9;
+  color: #333;
+}
+
+header {
+  background-color: #3498db;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav li {
+  margin: 0 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #3498db;
+}
+
+main {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+form {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="datetime-local"] {
+  flex: 1;
+  padding: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 0.4rem 0.8rem;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background-color: #ecf0f1;
+  border: 1px solid #ccc;
+  padding: 0.8rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px;
+}
+
+li span {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+li button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+  </style>
+</head>
+<body>
+  <h1>Gestor de Tareas</h1>
+  
+  <nav>
+    <ul>
+      <li><a href="inicio">Inicio</a></li>
+      <li><a href="calendario">Calendario</a></li>
+      <li><a href="clases-archivadas">Clases Archivadas</a></li>
+      <li><a href="clasesenlasqueteinscribiste.html">Clases en las que te inscribistes</a></li>
+      <li><a href="pendientes.html">Pendientes</a></li>    
+      <li><a href="login.html">Cerrar Sesión</a></li>
+    </ul>
+  </nav>
+
+  <select id="listSelector">
+    <!-- Opciones de lista aquí -->
+  </select>
+  
+  <form id="taskForm">
+    <input type="text" id="taskInput" placeholder="Ingrese una nueva tarea" required>
+    <button type="submit">Agregar tarea</button>
+  </form>
+  
+  <ul id="taskList">
+    <!-- Aquí se agregarán las tareas -->
+  </ul>
+  
+  <script>
+    const taskForm = document.getElementById('taskForm');
+    const taskInput = document.getElementById('taskInput');
+    const taskList = document.getElementById('taskList');
+    const listSelector = document.getElementById('listSelector');
+    const lists = {};
+    
+    // Agrega una nueva lista
+    function addList(listName) {
+      lists[listName] = [];
+      const option = document.createElement('option');
+      option.value = listName;
+      option.textContent = listName;
+      listSelector.appendChild(option);
+    }
+    
+    // Cambia la lista actual
+    listSelector.addEventListener('change', function() {
+      const selectedList = listSelector.value;
+      renderTasks(selectedList);
+    });
+    
+    // Función para renderizar las tareas de una lista
+    function renderTasks(listName) {
+      taskList.innerHTML = '';
+      
+      lists[listName].forEach((taskObj, index) => {
+        const { task, description } = taskObj;
+        const li = document.createElement('li');
+        
+        const taskTitle = document.createElement('span');
+        taskTitle.textContent = task;
+        li.appendChild(taskTitle);
+        
+        const descriptionElem = document.createElement('textarea');
+        descriptionElem.value = description;
+        descriptionElem.placeholder = 'Descripción de la tarea...';
+        descriptionElem.style.display = 'none';
+        li.appendChild(descriptionElem);
+        
+        const toggleDescriptionButton = document.createElement('button');
+        toggleDescriptionButton.textContent = 'Mostrar Descripción';
+        toggleDescriptionButton.addEventListener('click', function() {
+          if (descriptionElem.style.display === 'none') {
+            descriptionElem.style.display = 'block';
+            toggleDescriptionButton.textContent = 'Ocultar Descripción';
+          } else {
+            descriptionElem.style.display = 'none';
+            toggleDescriptionButton.textContent = 'Mostrar Descripción';
+          }
+        });
+        li.appendChild(toggleDescriptionButton);
+        
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.addEventListener('click', function() {
+          lists[listName].splice(index, 1);
+          renderTasks(listName);
+        });
+        li.appendChild(deleteButton);
+        
+        taskList.appendChild(li);
+      });
+    }
+    
+    // Manejar el envío del formulario para agregar una tarea
+    taskForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const selectedList = listSelector.value;
+      const newTask = taskInput.value;
+      const newDescription = ''; // Agrega la lógica para obtener la descripción
+      addTask(selectedList, newTask, newDescription);
+      taskInput.value = '';
+    });
+    
+    // Agrega una tarea a una lista
+    function addTask(listName, task, description) {
+      lists[listName].push({ task, description });
+      renderTasks(listName);
+    }
+    
+    // Agrega listas iniciales
+    addList('Lista 1');
+    addList('Lista 2');
+  </script>
+</body>
+</html>
