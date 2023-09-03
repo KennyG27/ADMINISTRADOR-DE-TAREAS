@@ -14,6 +14,5 @@ signupForm.addEventListener('submit', (e)=>{
     Users.push({name: name, email: email, password: password})
     localStorage.setItem('users', JSON.stringify(Users))
     alert('Registro Exitoso!')
-    window.location.href ='login.html'
-
+    window.location.href ='./login.html';
 })
