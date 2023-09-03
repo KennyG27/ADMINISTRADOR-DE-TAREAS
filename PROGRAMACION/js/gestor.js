@@ -51,6 +51,12 @@ function renderTasks(listName) {
     down_svg.setAttribute("viewBox", "0 0 24 24");
     down_svg.innerHTML = `<path fill="#333" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z"/>`;
 
+    const trash_svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    trash_svg.setAttribute("width","32")
+    trash_svg.setAttribute("height","32")
+    trash_svg.setAttribute("viewBox",'0 0 24 24')
+    trash_svg.innerHTML = `<path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`;
+
     const { task, description } = taskObj;
     const li = document.createElement("li");
 
@@ -87,7 +93,7 @@ function renderTasks(listName) {
     div.appendChild(toggleDescriptionButton);
 
     const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Eliminar";
+    deleteButton.appendChild(trash_svg)
     deleteButton.addEventListener("click", function () {
       lists[listName].splice(index, 1);
       renderTasks(listName);
