@@ -10,5 +10,5 @@ loginForm.addEventListener('submit', (e)=>{
     }
     alert(`Bienvenido Usuario!`)
     localStorage.setItem('login_success', JSON.stringify(validUser))
-    window.location.href = "index2.html"
+    window.location.href = "gestor.html"
 })

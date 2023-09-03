@@ -21,13 +21,17 @@
     </ul>
   </nav>
 
-  <select title="Selector de lista" id="listSelector">
-    <!-- Aquí se agregan las listas -->
-  </select>
+  <div>
+    <select title="Selector de lista" id="listSelector">
+      <!-- Aquí se agregan las listas -->
+    </select>
+    <button type="button" id="addList">Agregar Lista:</button>
+    <input type="text" id="newListName" placeholder="Nombre de la nueva lista">
+  </div>
   
   <form id="taskForm">
     <input type="text" id="taskInput" placeholder="Ingrese una nueva tarea" required>
-    <button type="submit">Agregar tarea</button>
+    <button type="submit" class="addTask">Agregar tarea</button>
   </form>
   
   <ul id="taskList">

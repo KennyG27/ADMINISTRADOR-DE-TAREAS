@@ -2,12 +2,15 @@ const taskForm = document.getElementById("taskForm");
 const taskInput = document.getElementById("taskInput");
 const taskList = document.getElementById("taskList");
 const listSelector = document.getElementById("listSelector");
+const addListBtn = document.getElementById('addList')
+const newListName = document.getElementById('newListName')
 const lists = {};
 
 // Agrega una nueva lista
 function addList(listName) {
   lists[listName] = [];
   const option = document.createElement("option");
+  option.contentEditable = true
   option.value = listName;
   option.textContent = listName;
   listSelector.appendChild(option);
@@ -18,6 +21,18 @@ listSelector.addEventListener("change", function () {
   const selectedList = listSelector.value;
   renderTasks(selectedList);
 });
+
+
+// Botón de añadir una lista
+addListBtn.id = 'addList'
+addListBtn.addEventListener('click', function() {
+  if (newListName.value == '') {newListName.value = 'Nueva lista'}
+  addList(newListName.value);
+  listSelector.selectedIndex = listSelector.length - 1;
+  const selectedList = listSelector.value;
+  renderTasks(selectedList);
+  newListName.value = '';
+})
 
 // Función para renderizar las tareas de una lista
 function renderTasks(listName) {

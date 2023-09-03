@@ -134,6 +134,39 @@ select:focus {
   font-weight: 600;
 }
 
+#addList {
+  background: none;
+  color: #333;
+  margin-left: 4ch;
+  padding: 0;
+  font-weight: 600;
+  font-size: .8rem;
+  position: relative;
+}
+
+#addList::after {
+  content: '';
+  position: absolute;
+  background-color: #333;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  transition: width .3s;
+}
+
+#addList:hover::after {
+  width: 100%;
+}
+
+#newListName {
+  height: .9ch;
+}
+
+.addTask:hover {
+  background-color: #007ccf;
+}
+
 .options_wrapper {
   display: flex;
   gap: 2ch;
@@ -145,7 +178,11 @@ select:focus {
 }
 
 .delete {
-  background-color: crimson;
+  background-color: rgb(196, 26, 60);
+}
+
+.delete:hover {
+  background-color: rgb(255, 0, 51);
 }
 
 textarea {
